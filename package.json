@@ -1,0 +1,18 @@
+{
+  "name": "grunt-autodeploy-ots",
+  "version": "0.0.1",
+  "description": "OneTwoSee grunt plugin to assist with app deployment",
+  "main": "index.js",
+  "keywords": [
+    "cloud",
+    "server",
+    "rackspace",
+    "deployment"
+  ],
+  "author": "Patrick Clark",
+  "license": "MIT",
+  "dependencies": {
+    "pkgcloud": "~0.8.17",
+    "underscore": "~1.5.2"
+  }
+}
