@@ -1,8 +1,12 @@
 {
   "name": "grunt-autodeploy-ots",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "OneTwoSee grunt plugin to assist with app deployment",
-  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:hellopat/grunt-autdodeploy-ots.git"
+  },
+  "main": "Gruntfile.js",
   "keywords": [
     "cloud",
     "server",
