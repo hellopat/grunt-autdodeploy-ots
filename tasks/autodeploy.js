@@ -54,12 +54,17 @@ module.exports = function(grunt) {
         rsyncTask,
         execTasks,
         target = grunt.option('target') || 'staging',
+        serverUser = grunt.config.get('autodeploy.servers.serverUser'),
         appName = grunt.config.get('pkg.name');
 
     for (i = 0; i < servers.length; i++) {
 
       host = _.findWhere(servers[i].addresses.public, {version: 4}).addr;
       dest = path.join(grunt.config.get('autodeploy.dest'), appName, grunt.config.get('pkg.version'));
+
+      if (serverUser) {
+        host = serverUser + '@' + host;
+      }
 
       rsyncTask = {
         options: {

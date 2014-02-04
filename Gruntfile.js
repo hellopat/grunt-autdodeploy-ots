@@ -10,7 +10,8 @@ module.exports = function(grunt) {
         username: 'your-username',
         apiKey: 'your-api-key',
         region: 'your-server-region',
-        serverKey: 'server-group'
+        serverKey: 'server-group',
+        serverUser: 'server-username'
       },
       dest: '/path/to/application'
     }
