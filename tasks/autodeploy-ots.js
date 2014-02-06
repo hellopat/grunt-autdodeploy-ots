@@ -10,27 +10,27 @@ module.exports = function(grunt) {
     var done = this.async();
 
     grunt.config.requires(
-      'autodeploy.servers.provider',
-      'autodeploy.servers.username',
-      'autodeploy.servers.apiKey',
-      'autodeploy.servers.region',
-      'autodeploy.servers.serverKey',
+      'autodeploy-ots.servers.provider',
+      'autodeploy-ots.servers.username',
+      'autodeploy-ots.servers.apiKey',
+      'autodeploy-ots.servers.region',
+      'autodeploy-ots.servers.serverKey',
       'pkg.version',
       'pkg.name'
     );
 
     var rackspace = require('pkgcloud').compute.createClient({
 
-      provider: grunt.config.get('autodeploy.servers.provider'),
-      username: grunt.config.get('autodeploy.servers.username'),
-      apiKey: grunt.config.get('autodeploy.servers.apiKey'),
-      region: grunt.config.get('autodeploy.servers.region')
+      provider: grunt.config.get('autodeploy-ots.servers.provider'),
+      username: grunt.config.get('autodeploy-ots.servers.username'),
+      apiKey: grunt.config.get('autodeploy-ots.servers.apiKey'),
+      region: grunt.config.get('autodeploy-ots.servers.region')
 
     });
 
     rackspace.getServers(function(err, servers) {
 
-      var set = getServerType(grunt.config.get('autodeploy.servers.serverKey'), servers);
+      var set = getServerType(grunt.config.get('autodeploy-ots.servers.serverKey'), servers);
 
       done(setConfig(set));
 
@@ -54,13 +54,13 @@ module.exports = function(grunt) {
         rsyncTask,
         execTasks,
         target = grunt.option('target') || 'staging',
-        serverUser = grunt.config.get('autodeploy.servers.serverUser'),
+        serverUser = grunt.config.get('autodeploy-ots.servers.serverUser'),
         appName = grunt.config.get('pkg.name');
 
     for (i = 0; i < servers.length; i++) {
 
       host = _.findWhere(servers[i].addresses.public, {version: 4}).addr;
-      dest = path.join(grunt.config.get('autodeploy.dest'), appName, grunt.config.get('pkg.version'));
+      dest = path.join(grunt.config.get('autodeploy-ots.dest'), appName, grunt.config.get('pkg.version'));
 
       if (serverUser) {
         host = serverUser + '@' + host;
