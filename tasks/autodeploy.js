@@ -74,21 +74,25 @@ module.exports = function(grunt) {
       };
 
       execTasks = {
-        restart: {
-          cmd: 'ssh ' + host + ' restart ' + appName
-        },
-        replaceSymlink: {
-          cmd: 'ssh ' + host + ' ln -s ' + dest + ' /var/www/' + appName
-        }
+        stop: 'ssh ' + host + ' stop ' + appName,
+        start: 'ssh ' + host + ' start ' + appName,
+        restart: 'ssh ' + host + ' restart ' + appName,
+        replaceSymlink: 'ssh ' + host + ' ln -s ' + dest + ' /var/www/' + appName,
+        clearNginxCache: 'ssh ' + host + ' rm -rf %s',
+        npmUpdate: 'ssh ' + host + ' cd ' + dest + '; npm update --' + target + ';'
       };
 
       grunt.log.debug('Destination ' + i + ': ' + rsyncTask.options.dest);
       grunt.log.debug('Host ' + i + ': ' + rsyncTask.options.host);
       grunt.log.debug('Restart Command: ' + i + ': ' + execTasks.restart.cmd);
-      grunt.log.debug('Symlink Command: ' + i + ': ' + execTasks.replaceSymlink.cmd)
+      grunt.log.debug('Symlink Command: ' + i + ': ' + execTasks.replaceSymlink.cmd);
       grunt.log.debug('rsync config: rsync.' + target + i);
-      grunt.log.debug('exec restart config: exec.' + target + i + '.restart')
-      grunt.log.debug('exec symlink config: exec.' + target + i + '.replaceSymlink')
+      grunt.log.debug('exec restart config: exec.' + target + i + '.restart');
+      grunt.log.debug('exec start config: exec.' + target + i + '.start');
+      grunt.log.debug('exec stop config: exec.' + target + i + '.stop');
+      grunt.log.debug('exec symlink config: exec.' + target + i + '.replaceSymlink');
+      grunt.log.debug('exec clear nginx cache config: exec.' + target + i + '.clearNginxCache');
+      grunt.log.debug('exec npm update config: exec.' + target + i + '.npmUpdate');
       grunt.log.debug('-----------');
 
       grunt.config.set('rsync.' + target + i, rsyncTask);
