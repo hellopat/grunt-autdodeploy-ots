@@ -5,7 +5,7 @@ module.exports = function(grunt) {
 
   'use strict';
 
-  grunt.registerTask('autodeploy', 'Gets rackspace servers by key', function() {
+  grunt.registerTask('autodeploy-ots', 'Gets rackspace servers by key', function() {
 
     var done = this.async();
 

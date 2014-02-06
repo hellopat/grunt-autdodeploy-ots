@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
 
-    autodeploy: {
+    'autodeploy-ots': {
       servers: {
         provider: 'your-provider',
         username: 'your-username',
