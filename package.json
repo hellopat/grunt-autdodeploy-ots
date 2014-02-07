@@ -1,6 +1,6 @@
 {
   "name": "grunt-autodeploy-ots",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "OneTwoSee grunt plugin to assist with app deployment",
   "repository": {
     "type": "git",
