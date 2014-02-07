@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
 
-    'autodeploy-ots': {
+    'autodeploy': {
       servers: {
         provider: 'your-provider',
         username: 'your-username',
@@ -13,7 +13,14 @@ module.exports = function(grunt) {
         serverKey: 'server-group',
         serverUser: 'server-username'
       },
-      dest: '/path/to/application'
+      dest: '/path/to/application',
+      commands: {
+        stop: 'stop <%= pkg.name %>',
+        start: 'start <%= pkg.name %>',
+        restart: 'restart <%= pkg.name %>',
+        replaceSymlink: 'ln -s <%= autodeploy.dest %> /var/www/<%= pkg.name %>',
+        npmUpdate: 'cd <%= autodeploy.dest %>; npm update --' + grunt.option('target') + ';'
+      }
     }
 
   });
