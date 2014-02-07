@@ -53,7 +53,6 @@ module.exports = function(grunt) {
         host,
         dest,
         rsyncTask,
-        execTasks,
         target = grunt.option('target') || 'staging',
         serverUser = grunt.config.get('autodeploy.servers.serverUser'),
         appName = grunt.config.get('pkg.name'),
@@ -89,7 +88,7 @@ module.exports = function(grunt) {
       grunt.log.debug('-----------');
 
       grunt.config.set('rsync.' + target + i, rsyncTask);
-      grunt.config.set('exec.' + target + i, execTasks);
+      grunt.config.set('exec.' + target + i, commands);
 
     }
 
