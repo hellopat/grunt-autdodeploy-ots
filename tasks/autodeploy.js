@@ -53,6 +53,7 @@ module.exports = function(grunt) {
         host,
         dest,
         rsyncTask,
+        execTasks = [],
         target = grunt.option('target') || 'staging',
         serverUser = grunt.config.get('autodeploy.servers.serverUser'),
         appName = grunt.config.get('pkg.name'),
@@ -76,7 +77,9 @@ module.exports = function(grunt) {
 
       if (commands) {
         for (var key in commands) {
-          commands[key] = 'ssh ' + host + ' ' + commands[key];
+          execTasks[key + '@' + target + i] = {
+            command: 'ssh ' + host + ' ' + (commands[key].command || commands[key].cmd)
+          };
         }
       }
 
@@ -84,11 +87,12 @@ module.exports = function(grunt) {
       grunt.log.debug('Host ' + i + ': ' + rsyncTask.options.host);
 
       grunt.log.debug('rsync config: rsync.' + target + i);
+      grunt.log.debug('exec config: exec.<cmd>@' + target + i);
 
       grunt.log.debug('-----------');
 
       grunt.config.set('rsync.' + target + i, rsyncTask);
-      grunt.config.set('exec.' + target + i, commands);
+      grunt.config.set('exec', execTasks);
 
     }
 
