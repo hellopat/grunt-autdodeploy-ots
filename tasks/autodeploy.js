@@ -96,6 +96,8 @@ module.exports = function(grunt) {
 
     }
 
+    grunt.event.emit('autodeploy.config.set', servers.length);
+
   }
 
 };
