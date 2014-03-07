@@ -78,7 +78,7 @@ module.exports = function(grunt) {
 
       if (commands) {
         for (var key in commands) {
-          execTasks[key + '@' + hostname] = {
+          execTasks[key + '@' + hostnames[i]] = {
             command: 'ssh ' + host + ' ' + (commands[key].command || commands[key].cmd)
           };
         }
@@ -87,12 +87,12 @@ module.exports = function(grunt) {
       grunt.log.debug('Destination ' + i + ': ' + rsyncTask.options.dest);
       grunt.log.debug('Host ' + i + ': ' + rsyncTask.options.host);
 
-      grunt.log.debug('rsync config: rsync.' + hostname);
-      grunt.log.debug('exec config: exec.<cmd>@' + hostname);
+      grunt.log.debug('rsync config: rsync.' + hostnames[i]);
+      grunt.log.debug('exec config: exec.<cmd>@' + hostnames[i]);
 
       grunt.log.debug('-----------');
 
-      grunt.config.set('rsync.' + hostname, rsyncTask);
+      grunt.config.set('rsync.' + hostnames[i], rsyncTask);
       grunt.config.set('exec', execTasks);
 
     }
