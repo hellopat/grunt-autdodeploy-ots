@@ -51,10 +51,10 @@ module.exports = function(grunt) {
 
     var i,
         host,
+        hostnames = [],
         dest,
         rsyncTask,
         execTasks = [],
-        target = grunt.option('target') || 'staging',
         serverUser = grunt.config.get('autodeploy.servers.serverUser'),
         appName = grunt.config.get('pkg.name'),
         commands = grunt.config.get('autodeploy.commands');
@@ -63,6 +63,7 @@ module.exports = function(grunt) {
 
       host = _.findWhere(servers[i].addresses.public, {version: 4}).addr;
       dest = path.join(grunt.config.get('autodeploy.dest'), appName, grunt.config.get('pkg.version'));
+      hostnames.push(servers[i].name);
 
       if (serverUser) {
         host = serverUser + '@' + host;
@@ -77,7 +78,7 @@ module.exports = function(grunt) {
 
       if (commands) {
         for (var key in commands) {
-          execTasks[key + '@' + target + i] = {
+          execTasks[key + '@' + hostname] = {
             command: 'ssh ' + host + ' ' + (commands[key].command || commands[key].cmd)
           };
         }
@@ -86,17 +87,17 @@ module.exports = function(grunt) {
       grunt.log.debug('Destination ' + i + ': ' + rsyncTask.options.dest);
       grunt.log.debug('Host ' + i + ': ' + rsyncTask.options.host);
 
-      grunt.log.debug('rsync config: rsync.' + target + i);
-      grunt.log.debug('exec config: exec.<cmd>@' + target + i);
+      grunt.log.debug('rsync config: rsync.' + hostname);
+      grunt.log.debug('exec config: exec.<cmd>@' + hostname);
 
       grunt.log.debug('-----------');
 
-      grunt.config.set('rsync.' + target + i, rsyncTask);
+      grunt.config.set('rsync.' + hostname, rsyncTask);
       grunt.config.set('exec', execTasks);
 
     }
 
-    grunt.event.emit('autodeploy.config.set', servers.length);
+    grunt.event.emit('autodeploy.config.set', hostnames);
 
   }
 
